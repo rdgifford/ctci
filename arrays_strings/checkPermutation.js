@@ -6,26 +6,26 @@ var nPerm2 = 'bbac';
 // sequence of elements where order disregarded
 
 checkPermutation = (str, perm) => {
-  var countChars, strChars, permChars;
-  countChars = (str) => {
-    var charCount = {};
-    // for each char in str
-    for (var charI = 0; charI < str.length; charI++) {
-      // set chars char to char or increment
-      var char = str[charI];
-      charCount[char] = (charCount[char] || 0) + 1;
+  var charCount = {};
+  var forEachChar = (str, callback) => {
+    for (var i = 0; i < str.length; i++) {
+      callback(str[i]);
     }
-    return charCount;
   }
-  strChars = countChars(str);
-  permChars = countChars(perm);
 
-  // if chars deeply equal
-  for(char in strChars) {
-    if(!permChars.hasOwnProperty(char) || strChars[char] !== permChars[char]) {
-      return false;
-    }
+  if(str.length !== perm.length) { 
+    return false; 
   }
+
+  forEachChar(str, char => { charCount[char] = (charCount[char] || 0) + 1 });
+  forEachChar(perm, char => {
+    if(typeof charCount[char] === undefined || charCount[char] <= 0) {
+      return false;
+    } else {
+      charCount[char]--;
+    }
+  })
+
   return true;
 }
 
