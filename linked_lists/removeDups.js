@@ -28,15 +28,14 @@ var noDups = {
 var removeDups = (list) => {
   var node = list;
   while(node !== null) {
-    var comNode = node.next;
-    var prev = node;
-    while(comNode !== null) {
-      if(node.value === comNode.value && node !== comNode) {
-        prev.next = comNode.next;
+    var comNode = node;
+    // var prev = node;
+    while(comNode.next !== null) {
+      if(node.value === comNode.next.value) {
+        comNode.next = comNode.next.next;
       } else {
-        prev = prev.next;
+        comNode = comNode.next;
       }
-      comNode = comNode.next;
     }
     node = node.next;
   }
